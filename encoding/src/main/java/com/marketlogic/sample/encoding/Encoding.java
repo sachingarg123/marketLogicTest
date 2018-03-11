@@ -2,6 +2,10 @@ package com.marketlogic.sample.encoding;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
+
+
 /**
  * This class is encoding and printing the test as per provided offset value
  * 
@@ -9,6 +13,8 @@ import java.util.Scanner;
  *
  */
 public class Encoding {
+	
+	static Logger logger = Logger.getLogger(Encoding.class.getName());
 
 	/**
 	 * Main Method to call encode method for validation of input key and apply logic
@@ -26,7 +32,8 @@ public class Encoding {
 		System.out.print("Enter the key, a number from 1 to 25(negative number allowed in this range) ");
 		offset = sc.nextInt();
 		if (offset > 25) {
-			System.out.println("Enter the key range in between 1 to 25(negative number allowed in this range) ");
+			logger.error("Enter the key range in between 1 to 25(negative number allowed in this range)");
+		
 		} else {
 			System.out.println();
 			System.out.println("Enter your plaintext: ");
@@ -35,14 +42,15 @@ public class Encoding {
 			plainText = plainText.toLowerCase(); // convert to lower case
 
 			cipherText = encode(offset, plainText);
-			System.out.println();
-			System.out.println("Text in lower case: " + plainText);
-			System.out.println("Encoded text:       " + cipherText);
+			if(logger.isInfoEnabled()){
+				logger.info("Text in lower case: " + plainText);
+				logger.info("Encoded text:       " + cipherText);
+			}
 			plainText = ""; // to be reconstructed from cipher Text
 		}
 	}
 
-	/**
+	/**-
 	 * Encodes String with another letters by applying an offset to move the
 	 * letter forward and backward in the alphabet. 
 	 * 
@@ -63,6 +71,7 @@ public class Encoding {
 	public static String encode(int offset, String original) {
 		int i;
 		String cipherText = "";
+		if(null!=original) {
 		for (i = 0; i < original.length(); i++) {
 			char plainChar, encodedChar;
 			int chCode;
@@ -82,6 +91,9 @@ public class Encoding {
 
 				cipherText += encodedChar; //add it in String
 			}
+		}
+		}else {
+			logger.error("Null is not allowed");
 		}
 
 		return cipherText;

@@ -2,6 +2,7 @@ package com.marketlogic.sample.encoding;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,6 +45,15 @@ public class EncodingTest {
 		// Test for offset negative
 		String encodedValue = Encoding.encode(-3, "xyz");
 		assertNotEquals("abc", encodedValue);
+
+	}
+	
+
+	@Test
+	public void test_offsetNull() {
+		// Test for offset negative
+		String encodedValue = Encoding.encode(-1,null);
+		assertEquals("",encodedValue );
 
 	}
 
